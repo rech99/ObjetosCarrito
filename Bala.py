@@ -18,9 +18,7 @@ class Bala:
         self.posicionX = self.posicionX + \
             (cos((self.anguloBala + self.desfase) * 3.14159 / 180) * self.velocidad * tiempo_delta)
         # checar colision con obstaculo si sigue "vivo"
-        #if obstaculo.vivo and self.posicionX + 0.01 > obstaculo.posicionX - 0.15 and self.posicionX - 0.01 < obstaculo.posicionX + 0.15 and self.posicionY + 0.01 > obstaculo.posicionY - 0.15 and self.posicionY - 0.01 < obstaculo.posicionY + 0.15:
-        #    obstaculo.vivo = False
-        #    carrito.disparando = False
+       
 
     def dibujar(self):
         glPushMatrix()

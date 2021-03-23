@@ -8,31 +8,46 @@ from Bala import *
 
 tiempo_anterior = 0
 
+obstaculos= []
+
+
 carrito = Carrito()
 obstaculo = Obstaculo(0.4, 0.6)
 segundoObstaculo = Obstaculo(-0.5, 0.3)
 
+def inicializarObstaculos():
+    global obstaculos
+    obstaculos.append(Obstaculo(0.4, -0.1))
+    obstaculos.append(Obstaculo(-0.5, 0.3))
+    obstaculos.append(Obstaculo(0.2, -0.5))
+    obstaculos.append(Obstaculo(0.5, .4))
+    obstaculos.append(Obstaculo(-0.7, -0.7))
+
 def actualizar(window):
     global tiempo_anterior
     global carrito
+    global obstaculos
 
     tiempo_actual = glfw.get_time()
     tiempo_delta = tiempo_actual - tiempo_anterior
 
     carrito.actualizar(window, tiempo_delta)
 
-    carrito.checar_colisiones(obstaculo)
-    if not carrito.colisionando:
-        carrito.checar_colisiones(segundoObstaculo)
-    tiempo_anterior = tiempo_actual
+    for obstaculo in obstaculos:
+        if obstaculo.vivo:
+            carrito.checar_colisiones(obstaculo)
+            if carrito.colisionando:
+                break
+
+    tiempo_anterior =  tiempo_actual
 
 def dibujar():
     global carrito
-    global obstaculo
-    global segundoObstaculo
+    global obstaculos
+  
     # rutinas de dibujo
-    obstaculo.dibujar()
-    segundoObstaculo.dibujar()
+    for obstaculo in obstaculos:
+        obstaculo.dibujar()
     carrito.dibujar()
 
 
@@ -82,6 +97,8 @@ def main():
     print(version_shaders)
 
     glfw.set_key_callback(window, key_callback)
+
+    inicializarObstaculos()
 
     while not glfw.window_should_close(window):
         # Establece regiond e dibujo
